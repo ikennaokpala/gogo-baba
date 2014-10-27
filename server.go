@@ -28,14 +28,14 @@ func serveRequests(rw http.ResponseWriter, r *http.Request) {
 
 func getResponse() ([]byte, error) {
 	posts := make(map[string]int)
-	posts["Posts"] = 61
-	posts["Pages"] = 99
-	posts["Recipes"] = 81
+	posts["posts"] = 61
+	posts["pages"] = 99
+	posts["recipes"] = 81
 
 	media := make(map[string]int)
-	media["Photos"] = 205
-	media["Videos"] = 32
-	media["PDFs"] = 72
+	media["photos"] = 205
+	media["videos"] = 32
+	media["pdfs"] = 72
 
 	blog := model.Blog{posts, media}
 	site := model.Site{blog}
