@@ -4,9 +4,6 @@ type Site struct {
 	Base Blog
 }
 
-type Post struct {
-}
-
 type Blog struct {
 	Post   Posts
 	Medium Media
