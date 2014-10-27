@@ -41,5 +41,4 @@ func getResponse() ([]byte, error) {
 	site := model.Site{blog}
 
 	return json.MarshalIndent(site, "", "  ")
-
 }
