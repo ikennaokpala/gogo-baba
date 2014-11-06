@@ -3,8 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ikennaokpala/gogo-baba/models"
 	"net/http"
+
+	"github.com/ikennaokpala/gogo-baba/model"
 )
 
 const (
