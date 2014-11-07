@@ -1,8 +1,11 @@
 package model
 
 import (
+	"io/ioutil"
 	"log"
 	"os"
+
+	"gopkg.in/yaml.v2"
 )
 
 // Site is an exported type that
@@ -25,24 +28,36 @@ type Posts map[string]int
 type Media map[string]int
 
 // Db represents information about the database
-type Db struct{}
+type Db struct {
+	Adapter  string
+	Database string
+	Host     string
+	User     string
+	Password string
+}
 
 // ReadYml read and returns content of
 // a yaml file passed to it
-func ReadYml() string {
-	return ""
-}
+func ReadYml() Db {
 
-// DbPath returns database.yml path
-func DbPath() string {
+	db := Db{}
+	path := DbPath()
 
-	path, err := os.Getwd()
-
-	dbConfig := path + "/config/database.yml"
+	data, _ := ioutil.ReadFile(path)
+	err := yaml.Unmarshal([]byte(data), &db)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return dbConfig
+	return db
+}
+
+// DbPath returns database.yml path
+func DbPath() string {
+
+	path, _ := os.Getwd()
+	dbPath := path + "/config/database.yml"
+
+	return dbPath
 }
