@@ -1,0 +1,7 @@
+{
+  "adapter": "mysql2"
+  "database": "test_db"
+  "host": "localhost"
+  "user": "root"
+  "password":
+}
