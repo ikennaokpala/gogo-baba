@@ -1,11 +1,10 @@
 package model
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"os"
-
-	"gopkg.in/yaml.v2"
 )
 
 // Site is an exported type that
@@ -36,15 +35,15 @@ type Db struct {
 	Password string
 }
 
-// ReadYml read and returns content of
+// ReadJSON read and returns content of
 // a yaml file passed to it
-func ReadYml() Db {
+func ReadJSON() Db {
 
 	db := Db{}
 	path := DbPath()
 
 	data, _ := ioutil.ReadFile(path)
-	err := yaml.Unmarshal([]byte(data), &db)
+	err := json.Unmarshal([]byte(data), &db)
 
 	if err != nil {
 		log.Fatal(err)
@@ -57,7 +56,11 @@ func ReadYml() Db {
 func DbPath() string {
 
 	path, _ := os.Getwd()
-	dbPath := path + "/config/database.yml"
+	dbPath := path + "/config/database.json"
 
 	return dbPath
+}
+
+func connect() {
+
 }
