@@ -54,31 +54,21 @@ func (db DbConfig) Connect() *sql.DB {
 	return con
 }
 
-// ReadJSON read and returns content of
-// a yaml file passed to it
-func ReadJSON() DbConfig {
+// Reads onfiguration YAML or JSON  and returns content of
+// the coreesponding file passed to it
+func ReadConfigFile(ext string) DbConfig {
+	var err error
 
 	db := DbConfig{}
-	path := DbConfigPath("json")
+	path := ConfigPath(ext)
 
 	data, _ := ioutil.ReadFile(path)
-	err := json.Unmarshal([]byte(data), &db)
 
-	if err != nil {
-		log.Fatal(err)
+	if ext == "json" {
+		err = json.Unmarshal([]byte(data), &db) // TODO need to figure out better error capture
+	} else {
+		err = yaml.Unmarshal([]byte(data), &db) // TODO need to figure out better error capture
 	}
-	return db
-}
-
-// ReadYAML read and returns content of
-// a yaml file passed to it
-func ReadYAML() DbConfig {
-
-	db := DbConfig{}
-	path := DbConfigPath("yml")
-
-	data, _ := ioutil.ReadFile(path)
-	err := yaml.Unmarshal([]byte(data), &db)
 
 	if err != nil {
 		log.Fatal(err)
@@ -87,8 +77,8 @@ func ReadYAML() DbConfig {
 	return db
 }
 
-// DbConfigPath returns database.yml path
-func DbConfigPath(ext string) string {
+// ConfigPath returns database.yml path
+func ConfigPath(ext string) string {
 
 	path, _ := os.Getwd()
 	dbPath := path + "/config/database." + ext
