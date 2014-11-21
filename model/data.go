@@ -50,7 +50,12 @@ func (db DbConfig) ConnectString() string {
 
 // Connect to Database
 func (db DbConfig) Connect() *sql.DB {
-	con, _ := sql.Open(db.Adapter, db.ConnectString())
+	con, err := sql.Open(db.Adapter, db.ConnectString())
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	return con
 }
 
