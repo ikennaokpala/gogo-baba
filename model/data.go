@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+
+	yaml "gopkg.in/yaml.v2"
 )
 
 // Site is an exported type that
@@ -40,7 +42,7 @@ type Db struct {
 func ReadJSON() Db {
 
 	db := Db{}
-	path := DbPath()
+	path := DbPath("json")
 
 	data, _ := ioutil.ReadFile(path)
 	err := json.Unmarshal([]byte(data), &db)
@@ -52,11 +54,28 @@ func ReadJSON() Db {
 	return db
 }
 
+// ReadYAML read and returns content of
+// a yaml file passed to it
+func ReadYAML() Db {
+
+	db := Db{}
+	path := DbPath("yml")
+
+	data, _ := ioutil.ReadFile(path)
+	err := yaml.Unmarshal([]byte(data), &db)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return db
+}
+
 // DbPath returns database.yml path
-func DbPath() string {
+func DbPath(ext string) string {
 
 	path, _ := os.Getwd()
-	dbPath := path + "/config/database.json"
+	dbPath := path + "/config/database." + ext
 
 	return dbPath
 }
