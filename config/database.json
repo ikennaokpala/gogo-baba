@@ -2,6 +2,6 @@
   "adapter": "mysql2",
   "database": "test_db",
   "host": "localhost",
-  "user": "root",
-  "password": ""
+  "user": "scribe",
+  "password": "temp123"
 }
