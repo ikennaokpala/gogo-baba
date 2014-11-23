@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"os"
 
 	_ "github.com/go-sql-driver/mysql" // This is a blank import
@@ -48,7 +47,7 @@ func (db Db) Connect() *sql.DB {
 	con, err := sql.Open(db.Adapter, db.ConnectString())
 
 	if err != nil {
-		log.Fatal(err)
+		panic(err.Error())
 	}
 
 	return con
@@ -75,7 +74,7 @@ func ReadConfigFile(ext string) Db {
 	}
 
 	if err != nil {
-		log.Fatal(err)
+		panic(err.Error())
 	}
 
 	return db
