@@ -32,11 +32,7 @@ type Media map[string]int
 
 // Db represents information about the database
 type Db struct {
-	Adapter  string
-	Database string
-	Host     string
-	User     string
-	Password string
+	Adapter, Database, Host, User, Password string
 }
 
 // Drive the connection parameters
