@@ -70,6 +70,18 @@ func (db Db) Read(sql string) {
 	fmt.Println("Columns: \n", cols)
 	fmt.Println("Exec : \n", values)
 	fmt.Println("Query: \n", rows)
+
+	var col1, col2, col3, col4 []byte
+	for rows.Next() {
+		// Scan the value to []byte
+		err = rows.Scan(&col1, &col2, &col3, &col4)
+
+		if err != nil {
+			panic(err.Error())
+		}
+
+		fmt.Println(string(col1), string(col2), string(col3), string(col4))
+	}
 }
 
 // Reads configuration YAML or JSON  and returns content of
