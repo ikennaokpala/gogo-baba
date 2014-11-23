@@ -3,6 +3,7 @@ package model
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -53,13 +54,27 @@ func (db Db) Connect() *sql.DB {
 	return con
 }
 
-func (db Db) Read() {
+func (db Db) Read(sql string) {
+	conn := db.Connect()
+	rows, err := conn.Query(sql)
+	values, err := conn.Exec(sql)
 
+	if err != nil {
+		panic(err.Error())
+	}
+
+	defer conn.Close()
+
+	cols, _ := rows.Columns()
+
+	fmt.Println("Columns: \n", cols)
+	fmt.Println("Exec : \n", values)
+	fmt.Println("Query: \n", rows)
 }
 
-// Reads onfiguration YAML or JSON  and returns content of
-// the coreesponding file passed to it
-func ReadConfigFile(ext string) Db {
+// Reads configuration YAML or JSON  and returns content of
+// the coresponding file passed to it
+func SetupDB(ext string) Db {
 	var err error
 
 	db := Db{}
@@ -87,4 +102,10 @@ func ConfigPath(ext string) string {
 	dbPath := path + "/config/database." + ext
 
 	return dbPath
+}
+
+// Run function that sets thing up
+func Run() {
+	db := SetupDB("yml")
+	db.Read("SELECT * FROM GFB_OPTIONS")
 }
