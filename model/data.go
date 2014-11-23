@@ -43,9 +43,8 @@ type Db struct {
 // from the Db properties
 func (db Db) ConnectString() string {
 	// This is the connection String
-	// meant for connecting to the
-	connectString := db.User + ":" + db.Password + "@/" + db.Database
-	return connectString
+	// meant for connecting to the database
+	return db.User + ":" + db.Password + "@/" + db.Database
 }
 
 // Connect to Database
