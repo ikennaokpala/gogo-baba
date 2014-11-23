@@ -22,7 +22,7 @@ func main() {
 func serveRequests(rw http.ResponseWriter, r *http.Request) {
 	response, err := getResponse()
 	if err != nil {
-		panic(err)
+		panic(err.Error())
 	}
 	fmt.Fprintf(rw, string(response))
 }
