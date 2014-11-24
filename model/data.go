@@ -79,7 +79,7 @@ func (db Db) Read(sql string) {
 	var id int
 	var name, value, autoload string
 	for rows.Next() {
-		// Scan the value to []byte
+		// Scan values to id, name, value, autoload
 		err = rows.Scan(&id, &name, &value, &autoload)
 
 		if err != nil {
