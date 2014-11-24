@@ -17,6 +17,13 @@ type Site struct {
 	Base Blog `json:"blog"`
 }
 
+// Option is an exported type that
+// contains all properties for option.
+type Option struct {
+	ID                    int
+	Name, Value, Autoload string
+}
+
 // Blog is an exported type that
 // contains a Post for Posts and Medium for Media.
 type Blog struct {
@@ -57,7 +64,6 @@ func (db Db) Connect() *sql.DB {
 func (db Db) Read(sql string) {
 	conn := db.Connect()
 	rows, err := conn.Query(sql)
-	values, err := conn.Exec(sql)
 
 	if err != nil {
 		panic(err.Error())
@@ -68,20 +74,29 @@ func (db Db) Read(sql string) {
 	cols, _ := rows.Columns()
 
 	fmt.Println("Columns: \n", cols)
-	fmt.Println("Exec : \n", values)
-	fmt.Println("Query: \n", rows)
 
-	var col1, col2, col3, col4 []byte
+	var options []*Option
+	var id int
+	var name, value, autoload string
 	for rows.Next() {
 		// Scan the value to []byte
-		err = rows.Scan(&col1, &col2, &col3, &col4)
+		err = rows.Scan(&id, &name, &value, &autoload)
 
 		if err != nil {
 			panic(err.Error())
 		}
+		option := &Option{
+			ID:       id,
+			Name:     name,
+			Value:    value,
+			Autoload: autoload,
+		}
 
-		fmt.Println(string(col1), string(col2), string(col3), string(col4))
+		options = append(options, option)
 	}
+	fmt.Println("Options: ", options)
+	fmt.Println("First Option: ", options[0].Name, options[0].Value)
+	fmt.Println("Options Length: ", len(options))
 }
 
 // Reads configuration YAML or JSON  and returns content of
