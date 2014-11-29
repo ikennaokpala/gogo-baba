@@ -53,7 +53,7 @@ func (db Db) String() string {
 // Connect to Database
 func (db Db) Connect() *sql.DB {
 	con, err := sql.Open(db.Adapter, db.String())
-
+	// fmt.Printf("Database connection string %s", db)
 	if err != nil {
 		panic(err.Error())
 	}
