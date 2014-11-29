@@ -44,7 +44,7 @@ type Db struct {
 
 // Drive the connection parameters
 // from the Db properties
-func (db Db) ConnectString() string {
+func (db Db) String() string {
 	// This is the connection String
 	// meant for connecting to the database
 	return db.User + ":" + db.Password + "@/" + db.Database
@@ -52,7 +52,7 @@ func (db Db) ConnectString() string {
 
 // Connect to Database
 func (db Db) Connect() *sql.DB {
-	con, err := sql.Open(db.Adapter, db.ConnectString())
+	con, err := sql.Open(db.Adapter, db.String())
 
 	if err != nil {
 		panic(err.Error())
